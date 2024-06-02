@@ -6,7 +6,7 @@ Tested most recently on Kali 2024.1 on VMWare Workstation Pro.
 ---
 
 ### Step 1 - Clone the Repo
-`git clone https://github.com/bradyjmcl/kaliUP.git /opt/kaliUP`
+`sudo git clone https://github.com/bradyjmcl/kaliUP.git /opt/kaliUP`  
 `chmod +x /opt/kaliUP/kaliUP.sh`
 
 ### Step 2 - Upgrade your package manager
