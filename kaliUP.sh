@@ -32,6 +32,16 @@ if [ "$uname_m" == "x86_64" ]; then
     arch="amd64"
 fi
 
+# Install gobuster
+printf "\n ${PURPLE}-_-_-_-_- Installing gobuster -_-_-_-_- ${NC}\n\n"
+apt install -y gobuster
+printf "\n ${GREEN}-_-_-_-_- Finished installing gobuster -_-_-_-_- ${NC}\n\n"
+
+# Install keepassxc
+printf "\n ${PURPLE}-_-_-_-_- Installing keepassxc -_-_-_-_- ${NC}\n\n"
+apt install -y keepassxc
+printf "\n ${GREEN}-_-_-_-_- Finished installing keepassxc -_-_-_-_- ${NC}\n\n"
+
 # Install LibreOffice
 printf "\n ${PURPLE}-_-_-_-_- Installing LibreOffice -_-_-_-_- ${NC}\n\n"
 apt install -y libreoffice
