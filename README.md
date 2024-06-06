@@ -7,6 +7,7 @@ Tested most recently on Kali 2024.1 on VMWare Workstation Pro.
 
 ### Step 1 - Clone the Repo
 `sudo git clone https://github.com/bradyjmcl/kaliUP.git /opt/kaliUP`  
+
 `sudo chmod +x /opt/kaliUP/kaliUP.sh`
 
 ### Step 2 - Upgrade your package manager
@@ -15,6 +16,11 @@ Tested most recently on Kali 2024.1 on VMWare Workstation Pro.
 ### Step 3 - Run
 kaliUP is intended to be run with sudo (or as root, if you roll like that).
 `sudo /opt/kaliUP/kaliUP.sh`
+
+### Step 4 (Optional) - Run script (commented at end of kaliUP.sh) to add new user
+
+### Step 5 (Optional) - Run PimpMyKali
+`sudo /opt/pimpmykali/pimpmykali.sh`
 
 ---
 
