@@ -32,6 +32,10 @@ if [ "$uname_m" == "x86_64" ]; then
     arch="amd64"
 fi
 
+printf "\n ${PURPLE}-_-_-_-_- Installing wireguard -_-_-_-_- ${NC}\n\n"
+apt install -y wireguard
+printf "\n ${GREEN}-_-_-_-_- Finished installing wireguard -_-_-_-_- ${NC}\n\n"
+
 # Install gobuster
 printf "\n ${PURPLE}-_-_-_-_- Installing gobuster -_-_-_-_- ${NC}\n\n"
 apt install -y gobuster
@@ -307,3 +311,15 @@ wget https://github.com/gentilkiwi/mimikatz/releases/download/$mimikatz_version/
 unzip mimikatz.zip
 
 printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
+
+# If you want to create a new account and duplicate the permissions of the kali account, you can run this after:
+# I would run this BEFORE running PMK as PMK alters user conditions.
+
+# KALI_USER=$1
+# NEW_USER=$2
+# KALI_USER_GROUPS=$(id -Gn ${KALI_USER} | sed "s/ /,/g" | sed -r 's/\<'${KALI_USER}'\>\b,?//g')
+# KALI_USER_SHELL=$(awk -F : -v name=${KALI_USER} '(name == $1) { print $7 }' /etc/passwd)
+# sudo useradd --groups ${KALI_USER_GROUPS} --shell ${KALI_USER_SHELL} --create-home ${NEW_USER}
+# sudo passwd ${NEW_USER}
+# sudo usermod -L -e 1 ${KALI_USER}
+# sudo cat /home/${KALI_USER}/.zshrc > /home/${NEW_USER}/.zshrc
