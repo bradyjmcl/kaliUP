@@ -32,6 +32,26 @@ if [ "$uname_m" == "x86_64" ]; then
     arch="amd64"
 fi
 
+printf "\n ${PURPLE}-_-_-_-_- Installing sickle -_-_-_-_- ${NC}\n\n"
+apt install -y sickle
+printf "\n ${GREEN}-_-_-_-_- Finished installing sickle -_-_-_-_- ${NC}\n\n"
+
+printf "\n ${PURPLE}-_-_-_-_- Installing netexec -_-_-_-_- ${NC}\n\n"
+apt install -y netexec
+printf "\n ${GREEN}-_-_-_-_- Finished installing netexec -_-_-_-_- ${NC}\n\n"
+
+printf "\n ${PURPLE}-_-_-_-_- Installing mitm6 -_-_-_-_- ${NC}\n\n"
+apt install -y mitm6
+printf "\n ${GREEN}-_-_-_-_- Finished installing mitm6 -_-_-_-_- ${NC}\n\n"
+
+printf "\n ${PURPLE}-_-_-_-_- Installing coercer -_-_-_-_- ${NC}\n\n"
+apt install -y coercer
+printf "\n ${GREEN}-_-_-_-_- Finished installing coercer -_-_-_-_- ${NC}\n\n"
+
+printf "\n ${PURPLE}-_-_-_-_- Installing autorecon -_-_-_-_- ${NC}\n\n"
+apt install -y autorecon
+printf "\n ${GREEN}-_-_-_-_- Finished installing autorecon -_-_-_-_- ${NC}\n\n"
+
 printf "\n ${PURPLE}-_-_-_-_- Installing wireguard -_-_-_-_- ${NC}\n\n"
 apt install -y wireguard
 printf "\n ${GREEN}-_-_-_-_- Finished installing wireguard -_-_-_-_- ${NC}\n\n"
