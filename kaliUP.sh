@@ -342,4 +342,6 @@ printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
 # sudo useradd --groups ${KALI_USER_GROUPS} --shell ${KALI_USER_SHELL} --create-home ${NEW_USER}
 # sudo passwd ${NEW_USER}
 # sudo usermod -L -e 1 ${KALI_USER}
+
+# Then after logging in you can copy the .zshrc file over to your new user to enable the alias we set up earlier. Remember that we're not in the script anymore, so we'll have to replace the values.
 # sudo cat /home/${KALI_USER}/.zshrc > /home/${NEW_USER}/.zshrc
