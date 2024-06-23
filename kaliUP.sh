@@ -18,7 +18,7 @@ fi
 
 # Let user know that script is intended to be run after an apt update & apt upgrade
 printf "\n${YELLOW}This script is intended to be run after an ${WHITE}apt update ${YELLOW}and ${WHITE}apt upgrade${YELLOW}. These commands are not included for brevity, but please cancel with ${RED}Ctrl + C ${YELLOW}if you haven't run them already.${NC}\n\n"
-sleep 10
+sleep 8
 printf "\n${GREEN}Okay, here we go! ${NC}\n\n"
 sleep 2
 
@@ -35,6 +35,10 @@ fi
 printf "\n ${PURPLE}-_-_-_-_- Installing sickle -_-_-_-_- ${NC}\n\n"
 apt install -y sickle
 printf "\n ${GREEN}-_-_-_-_- Finished installing sickle -_-_-_-_- ${NC}\n\n"
+
+printf "\n ${PURPLE}-_-_-_-_- Installing ntpdate -_-_-_-_- ${NC}\n\n"
+apt install -y ntpdate
+printf "\n ${GREEN}-_-_-_-_- Finished installing ntpdate -_-_-_-_- ${NC}\n\n"
 
 printf "\n ${PURPLE}-_-_-_-_- Installing netexec -_-_-_-_- ${NC}\n\n"
 apt install -y netexec
@@ -97,6 +101,21 @@ printf "\n ${CYAN}-_-_-_-_- Updating MIBS... -_-_-_-_- ${NC}\n\n"
 download-mibs
 sed -i 's/^mibs :/# mibs :/' /etc/snmp/snmp.conf
 printf "\n ${GREEN}-_-_-_-_- Finished installing MIBS Downloader -_-_-_-_- ${NC}\n\n"
+
+# Clone krbrelayx
+printf "\n ${PURPLE}-_-_-_-_- Cloning krbrelayx -_-_-_-_- ${NC}\n\n"
+git clone https://github.com/dirkjanm/krbrelayx.git /opt/krbrelayx
+printf "\n ${GREEN}-_-_-_-_- Finished cloning krbrelayx -_-_-_-_- ${NC}\n\n"
+
+# Clone PKINITtools
+printf "\n ${PURPLE}-_-_-_-_- Cloning PKINITtools -_-_-_-_- ${NC}\n\n"
+git clone https://github.com/dirkjanm/PKINITtools.git /opt/PKINITtools
+printf "\n ${GREEN}-_-_-_-_- Finished cloning PKINITtools -_-_-_-_- ${NC}\n\n"
+
+# Clone PKINITtools
+printf "\n ${PURPLE}-_-_-_-_- Cloning pywhisker -_-_-_-_- ${NC}\n\n"
+git clone https://github.com/ShutdownRepo/pywhisker.git /opt/pywhisker
+printf "\n ${GREEN}-_-_-_-_- Finished cloning pywhisker -_-_-_-_- ${NC}\n\n"
 
 # Clone pimpmykali
 printf "\n ${PURPLE}-_-_-_-_- Cloning PimpMyKali -_-_-_-_- ${NC}\n\n"
@@ -342,6 +361,4 @@ printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
 # sudo useradd --groups ${KALI_USER_GROUPS} --shell ${KALI_USER_SHELL} --create-home ${NEW_USER}
 # sudo passwd ${NEW_USER}
 # sudo usermod -L -e 1 ${KALI_USER}
-
-# Then after logging in you can copy the .zshrc file over to your new user to enable the alias we set up earlier. Remember that we're not in the script anymore, so we'll have to replace the values.
 # sudo cat /home/${KALI_USER}/.zshrc > /home/${NEW_USER}/.zshrc
