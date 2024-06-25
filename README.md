@@ -1,7 +1,11 @@
 # kaliUP
 A script to download commonly used penetration testing tools to a new Kali virtual machine. Intended to be eternally a work in progress. 
 
-Tested most recently on Kali 2024.1 on VMWare Workstation Pro.
+x64 tested most recently on Kali 2024.2 on VMWare Workstation Pro.
+arm64 tested most recently on Kali 2024.2 on Parallels.
+
+### font-fixer.sh
+Script to download FiraCode Nerd Fonts for use with tmux. Optional.
 
 ---
 
