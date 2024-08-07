@@ -18,7 +18,7 @@ fi
 
 # Let user know that script is intended to be run after an apt update & apt upgrade
 printf "\n${YELLOW}This script is intended to be run after an ${WHITE}apt update ${YELLOW}and ${WHITE}apt upgrade${YELLOW}. These commands are not included for brevity, but please cancel with ${RED}Ctrl + C ${YELLOW}if you haven't run them already.${NC}\n\n"
-sleep 8
+sleep 10
 printf "\n${GREEN}Okay, here we go! ${NC}\n\n"
 sleep 2
 
@@ -83,6 +83,12 @@ usermod -aG docker kali
 apt install -y docker-compose
 printf "\n ${GREEN}-_-_-_-_- Finished installing Docker -_-_-_-_- ${NC}\n\n"
 
+# Install Rust
+printf "\n ${PURPLE}-_-_-_-_- Installing Rust -_-_-_-_- ${NC}\n\n"
+apt install -y rustup
+rustup default stable
+printf "\n ${GREEN}-_-_-_-_- Finished installing Rust -_-_-_-_- ${NC}\n\n"
+
 # Install Bloodhound (Community Edition)
 printf "\n ${PURPLE}-_-_-_-_- Installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 mkdir /opt/bloodhound-ce
@@ -93,14 +99,28 @@ sed -i '247 a\# bloodhound community edition alias' /home/kali/.zshrc
 sed -i "248 a\alias bloodhound-ce=\'cd /opt/bloodhound-ce&&sudo docker-compose up\'\n" /home/kali/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 
+# Install RustHound
+printf "\n ${PURPLE}-_-_-_-_- Installing RustHound -_-_-_-_- ${NC}\n\n"
+git clone -b v2 https://github.com/NH-RED-TEAM/RustHound.git /opt/rusthound
+cd /opt/rusthound
+cargo update -p time@0.1.45
+cargo update -p time@0.3.28
+cargo build --release
+
+# Add an alias for 'rusthound'
+sed -i '250 a\# rusthound alias' /home/kali/.zshrc
+sed -i "251 a\alias rusthound=\'/opt/rusthound/target/release/rusthound\'\n" /home/kali/.zshrc
+printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
+
 # Install snmp-mibs-downloader
 printf "\n ${PURPLE}-_-_-_-_- Installing MIBS Downloader -_-_-_-_- ${NC}\n\n"
 apt install -y snmp-mibs-downloader
+printf "\n ${GREEN}-_-_-_-_- Finished installing MIBS Downloader -_-_-_-_- ${NC}\n\n"
 
-printf "\n ${CYAN}-_-_-_-_- Updating MIBS... -_-_-_-_- ${NC}\n\n"
+printf "\n ${CYAN}-_-_-_-_- Downloading MIBS... -_-_-_-_- ${NC}\n\n"
 download-mibs
 sed -i 's/^mibs :/# mibs :/' /etc/snmp/snmp.conf
-printf "\n ${GREEN}-_-_-_-_- Finished installing MIBS Downloader -_-_-_-_- ${NC}\n\n"
+printf "\n ${GREEN}-_-_-_-_- Finished downloading MIBS -_-_-_-_- ${NC}\n\n"
 
 # Clone krbrelayx
 printf "\n ${PURPLE}-_-_-_-_- Cloning krbrelayx -_-_-_-_- ${NC}\n\n"
@@ -112,7 +132,7 @@ printf "\n ${PURPLE}-_-_-_-_- Cloning PKINITtools -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/dirkjanm/PKINITtools.git /opt/PKINITtools
 printf "\n ${GREEN}-_-_-_-_- Finished cloning PKINITtools -_-_-_-_- ${NC}\n\n"
 
-# Clone PKINITtools
+# Clone pywhisker
 printf "\n ${PURPLE}-_-_-_-_- Cloning pywhisker -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/ShutdownRepo/pywhisker.git /opt/pywhisker
 printf "\n ${GREEN}-_-_-_-_- Finished cloning pywhisker -_-_-_-_- ${NC}\n\n"
@@ -277,7 +297,6 @@ for ghostpack_binary in ${ghostpack_files[@]}; do
 done
 
 # Get RunasCs
-
 printf "\n ${CYAN}-_-_-_-_- Pulling down RunasCs... -_-_-_-_- ${NC}\n\n"
 
 runascs_version=$(curl -s https://github.com/antonioCoco/RunasCs/releases/ | grep 'RunasCs version' -m 1 | cut -d ' ' -f 7 | cut -d '<' -f 1)
@@ -289,29 +308,25 @@ chmod +x /opt/staging/windows/RunasCs_net2.exe
 rm /opt/staging/windows/RunasCs.zip
 wget https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1 -O /opt/staging/windows/Invoke-RunasCs.ps1
 
-# Get SharpHound
-
-printf "\n ${CYAN}-_-_-_-_- Pulling down SharpHound... -_-_-_-_- ${NC}\n\n"
+# Get SharpHound CE
+printf "\n ${CYAN}-_-_-_-_- Pulling down SharpHound CE... -_-_-_-_- ${NC}\n\n"
 
 sharphound_version=$(curl -s https://github.com/BloodHoundAD/SharpHound/releases | grep BloodHoundAD/SharpHound/tree -m 1 | cut -d 'v' -f 2 | cut -d '"' -f 1)
-wget "https://github.com/BloodHoundAD/SharpHound/releases/download/v"$sharphound_version"/SharpHound-v"$sharphound_version".zip" -O /opt/staging/windows/SharpHound.zip
+mkdir /opt/staging/windows/sharphound
+wget "https://github.com/BloodHoundAD/SharpHound/releases/download/v"$sharphound_version"/SharpHound-v"$sharphound_version".zip" -O /opt/staging/windows/sharphound/SharpHound.zip
+unzip /opt/staging/windows/sharphound/SharpHound.zip -d /opt/staging/windows/sharphound 
 # Leaving this so that dependencies can be transferred as needed
 
 # Copy PowerView.ps1 for ease of access
-
 printf "\n ${CYAN}-_-_-_-_- Pulling down PowerView.ps1... -_-_-_-_- ${NC}\n\n"
-
 wget https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1 -O /opt/staging/windows/powerview.ps1
-
 printf "\n ${CYAN}-_-_-_-_- Pulling down PowerUp.ps1... -_-_-_-_- ${NC}\n\n"
 
 # PowerUp is no longer being updated and can be downloaded in its latest form:
 wget https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1 -O /opt/staging/windows/powerup.ps1
 
 # Get nc64 for 64- and 32-bit systems
-
 printf "\n ${CYAN}-_-_-_-_- Pulling down nc64 executables... -_-_-_-_- ${NC}\n\n"
-
 nc64_version=$(curl -s https://github.com/vinsworldcom/NetCat64/releases | grep vinsworldcom/NetCat64/releases/tag -m 1 | cut -d '"' -f 6 | cut -d '/' -f 6)
 wget "https://github.com/vinsworldcom/NetCat64/releases/download/"$nc64_version"/nc64.exe" -O /opt/staging/windows/nc64.exe
 chmod +x /opt/staging/windows/nc64.exe
@@ -319,9 +334,7 @@ wget "https://github.com/vinsworldcom/NetCat64/releases/download/"$nc64_version"
 chmod +x /opt/staging/windows/nc64_32bit.exe
 
 # Get GodPotato and CoercedPotato
-
 printf "\n ${CYAN}-_-_-_-_- Pulling down GodPotato Binaries... -_-_-_-_- ${NC}\n\n"
-
 mkdir /opt/staging/windows/potato
 godpotato_version=$(curl -s https://github.com/BeichenDream/GodPotato | grep BeichenDream/GodPotato/releases/tag -m 1 | cut -d 'V' -f 2 | cut -d '"' -f 1)
 godpotato_files=("GodPotato-NET2.exe" "GodPotato-NET35.exe" "GodPotato-NET4.exe")
@@ -340,7 +353,6 @@ chmod +x /opt/staging/windows/potato/CoercedPotato.exe
 rm -rf /opt/staging/windows/potato/CoercedPotatoCompiled
 
 # Download Mimikatz
-
 printf "\n ${CYAN}-_-_-_-_- Pulling down Mimikatz... -_-_-_-_- ${NC}\n\n"
 
 mkdir /opt/staging/windows/mimikatz
@@ -354,11 +366,15 @@ printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
 # If you want to create a new account and duplicate the permissions of the kali account, you can run this after:
 # I would run this BEFORE running PMK as PMK alters user conditions.
 
+# Usage (as root): ./user.sh kali brady
+
+#!/bin/bash
+
 # KALI_USER=$1
 # NEW_USER=$2
 # KALI_USER_GROUPS=$(id -Gn ${KALI_USER} | sed "s/ /,/g" | sed -r 's/\<'${KALI_USER}'\>\b,?//g')
 # KALI_USER_SHELL=$(awk -F : -v name=${KALI_USER} '(name == $1) { print $7 }' /etc/passwd)
-# sudo useradd --groups ${KALI_USER_GROUPS} --shell ${KALI_USER_SHELL} --create-home ${NEW_USER}
-# sudo passwd ${NEW_USER}
-# sudo usermod -L -e 1 ${KALI_USER}
-# sudo cat /home/${KALI_USER}/.zshrc > /home/${NEW_USER}/.zshrc
+# useradd --groups ${KALI_USER_GROUPS} --shell ${KALI_USER_SHELL} --create-home ${NEW_USER}
+# passwd ${NEW_USER}
+# cat /home/${KALI_USER}/.zshrc > /home/${NEW_USER}/.zshrc
+# usermod -L -e 1 ${KALI_USER}
