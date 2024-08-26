@@ -12,7 +12,7 @@ NC='\033[0m' # No Color (reset)
 
 # Check if user is root else print root message and exit.
 if [ "$EUID" -ne 0 ]; then
-	printf "\n ${RED}-_-_-_-_- This script must be run as root. Please run as root or use sudo. -_-_-_-_- ${NC}\n\n"
+	printf "\n ${RED}-_-_-_-_- This script must be run as root. Please use sudo to run kaliUP. -_-_-_-_- ${NC}\n\n"
 	exit 1
 fi
 
@@ -79,7 +79,7 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing LibreOffice -_-_-_-_- ${NC}\n\n
 printf "\n ${PURPLE}-_-_-_-_- Installing Docker -_-_-_-_- ${NC}\n\n"
 apt install -y docker.io
 systemctl enable docker --now
-usermod -aG docker kali
+usermod -aG docker $SUDO_USER
 apt install -y docker-compose
 printf "\n ${GREEN}-_-_-_-_- Finished installing Docker -_-_-_-_- ${NC}\n\n"
 
@@ -95,8 +95,8 @@ mkdir /opt/bloodhound-ce
 curl -L https://ghst.ly/getbhce > /opt/bloodhound-ce/docker-compose.yml
 
 # Add an alias for 'bloodhound-ce'
-sed -i '247 a\# bloodhound community edition alias' /home/kali/.zshrc
-sed -i "248 a\alias bloodhound-ce=\'cd /opt/bloodhound-ce&&sudo docker-compose up\'\n" /home/kali/.zshrc
+sed -i '247 a\# bloodhound community edition alias' /home/$SUDO_USER/.zshrc
+sed -i "248 a\alias bloodhound-ce=\'cd /opt/bloodhound-ce&&sudo docker-compose up\'\n" /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 
 # Install RustHound
@@ -108,8 +108,8 @@ cargo update -p time@0.3.28
 cargo build --release
 
 # Add an alias for 'rusthound'
-sed -i '250 a\# rusthound alias' /home/kali/.zshrc
-sed -i "251 a\alias rusthound=\'/opt/rusthound/target/release/rusthound\'\n" /home/kali/.zshrc
+sed -i '250 a\# rusthound alias' /home/$SUDO_USER/.zshrc
+sed -i "251 a\alias rusthound=\'/opt/rusthound/target/release/rusthound\'\n" /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
 
 # Install snmp-mibs-downloader
@@ -292,7 +292,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down Ghostpack compiled binaries... -_-_-_-_
 # Get Ghostpack Binaries
 ghostpack_files=("SharpUp.exe" "Certify.exe" "Rubeus.exe" "Seatbelt.exe")
 for ghostpack_binary in ${ghostpack_files[@]}; do
-	wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/blob/master/$ghostpack_binary -O /opt/staging/windows/$ghostpack_binary
+	wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/$ghostpack_binary -O /opt/staging/windows/$ghostpack_binary
 	chmod +x /opt/staging/windows/$ghostpack_binary 
 done
 
@@ -306,7 +306,7 @@ unzip /opt/staging/windows/RunasCs.zip
 chmod +x /opt/staging/windows/RunasCs.exe  
 chmod +x /opt/staging/windows/RunasCs_net2.exe
 rm /opt/staging/windows/RunasCs.zip
-wget https://github.com/antonioCoco/RunasCs/blob/master/Invoke-RunasCs.ps1 -O /opt/staging/windows/Invoke-RunasCs.ps1
+wget https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -O /opt/staging/windows/Invoke-RunasCs.ps1
 
 # Get SharpHound CE
 printf "\n ${CYAN}-_-_-_-_- Pulling down SharpHound CE... -_-_-_-_- ${NC}\n\n"
@@ -319,11 +319,11 @@ unzip /opt/staging/windows/sharphound/SharpHound.zip -d /opt/staging/windows/sha
 
 # Copy PowerView.ps1 for ease of access
 printf "\n ${CYAN}-_-_-_-_- Pulling down PowerView.ps1... -_-_-_-_- ${NC}\n\n"
-wget https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1 -O /opt/staging/windows/powerview.ps1
+wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1 -O /opt/staging/windows/powerview.ps1
 printf "\n ${CYAN}-_-_-_-_- Pulling down PowerUp.ps1... -_-_-_-_- ${NC}\n\n"
 
 # PowerUp is no longer being updated and can be downloaded in its latest form:
-wget https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1 -O /opt/staging/windows/powerup.ps1
+wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1 -O /opt/staging/windows/powerup.ps1
 
 # Get nc64 for 64- and 32-bit systems
 printf "\n ${CYAN}-_-_-_-_- Pulling down nc64 executables... -_-_-_-_- ${NC}\n\n"
@@ -368,7 +368,7 @@ printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
 
 # Usage (as root): ./user.sh kali brady
 
-#!/bin/bash
+##!/bin/bash
 
 # KALI_USER=$1
 # NEW_USER=$2
