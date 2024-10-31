@@ -137,6 +137,16 @@ printf "\n ${PURPLE}-_-_-_-_- Cloning pywhisker -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/ShutdownRepo/pywhisker.git /opt/pywhisker
 printf "\n ${GREEN}-_-_-_-_- Finished cloning pywhisker -_-_-_-_- ${NC}\n\n"
 
+# Clone sccmhunter
+printf "\n ${PURPLE}-_-_-_-_- Cloning sccmhunter -_-_-_-_- ${NC}\n\n"
+git clone https://github.com/garrettfoster13/sccmhunter.git /opt/sccmhunter
+printf "\n ${GREEN}-_-_-_-_- Finished cloning sccmhunter -_-_-_-_- ${NC}\n\n"
+
+# Clone Impacket (SCCM Relay)
+printf "\n ${PURPLE}-_-_-_-_- Cloning Impacket (SCCM Relay) -_-_-_-_- ${NC}\n\n"
+git clone -b feature/relay-sccm-adminservice --single-branch https://github.com/garrettfoster13/impacket.git /opt/impacket_sccm_relay
+printf "\n ${GREEN}-_-_-_-_- Finished cloning Impacket (SCCM Relay) -_-_-_-_- ${NC}\n\n"
+
 # Clone pimpmykali
 printf "\n ${PURPLE}-_-_-_-_- Cloning PimpMyKali -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/Dewalt-arch/pimpmykali.git /opt/pimpmykali
