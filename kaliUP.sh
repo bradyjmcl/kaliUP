@@ -100,16 +100,15 @@ sed -i "248 a\alias bloodhound-ce=\'cd /opt/bloodhound-ce&&sudo docker-compose u
 printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 
 # Install RustHound
-printf "\n ${PURPLE}-_-_-_-_- Installing RustHound -_-_-_-_- ${NC}\n\n"
-git clone -b v2 https://github.com/NH-RED-TEAM/RustHound.git /opt/rusthound
+printf "\n ${PURPLE}-_-_-_-_- Installing RustHound-CE -_-_-_-_- ${NC}\n\n"
+git clone https://github.com/g0h4n/RustHound-CE.git /opt/rusthound-ce
 cd /opt/rusthound
-cargo update -p time@0.1.45
-cargo update -p time@0.3.28
+cargo update -p time@0.3.36
 cargo build --release
 
 # Add an alias for 'rusthound'
 sed -i '250 a\# rusthound alias' /home/$SUDO_USER/.zshrc
-sed -i "251 a\alias rusthound=\'/opt/rusthound/target/release/rusthound\'\n" /home/$SUDO_USER/.zshrc
+sed -i "251 a\alias rusthound=\'/opt/rusthound/target/release/rusthound-ce\'\n" /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
 
 # Install snmp-mibs-downloader
@@ -127,9 +126,14 @@ printf "\n ${PURPLE}-_-_-_-_- Cloning krbrelayx -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/dirkjanm/krbrelayx.git /opt/krbrelayx
 printf "\n ${GREEN}-_-_-_-_- Finished cloning krbrelayx -_-_-_-_- ${NC}\n\n"
 
+# Clone PetitPotam
+printf "\n ${PURPLE}-_-_-_-_- Cloning PetitPotam -_-_-_-_- ${NC}\n\n"
+git clone https://github.com/dirkjanm/PKINITtools.git /opt/PKINITtools
+printf "\n ${GREEN}-_-_-_-_- Finished cloning PetitPotam -_-_-_-_- ${NC}\n\n"
+
 # Clone PKINITtools
 printf "\n ${PURPLE}-_-_-_-_- Cloning PKINITtools -_-_-_-_- ${NC}\n\n"
-git clone https://github.com/dirkjanm/PKINITtools.git /opt/PKINITtools
+git clone https://github.com/topotam/PetitPotam.git /opt/petitpotam
 printf "\n ${GREEN}-_-_-_-_- Finished cloning PKINITtools -_-_-_-_- ${NC}\n\n"
 
 # Clone pywhisker
