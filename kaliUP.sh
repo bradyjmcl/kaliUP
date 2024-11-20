@@ -102,13 +102,13 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n
 # Install RustHound
 printf "\n ${PURPLE}-_-_-_-_- Installing RustHound-CE -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/g0h4n/RustHound-CE.git /opt/rusthound-ce
-cd /opt/rusthound
+cd /opt/rusthound-ce
 cargo update -p time@0.3.36
 cargo build --release
 
 # Add an alias for 'rusthound'
 sed -i '250 a\# rusthound alias' /home/$SUDO_USER/.zshrc
-sed -i "251 a\alias rusthound=\'/opt/rusthound/target/release/rusthound-ce\'\n" /home/$SUDO_USER/.zshrc
+sed -i "251 a\alias rusthound=\'/opt/rusthound-ce/target/release/rusthound-ce\'\n" /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
 
 # Install snmp-mibs-downloader
@@ -126,12 +126,12 @@ printf "\n ${PURPLE}-_-_-_-_- Cloning krbrelayx -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/dirkjanm/krbrelayx.git /opt/krbrelayx
 printf "\n ${GREEN}-_-_-_-_- Finished cloning krbrelayx -_-_-_-_- ${NC}\n\n"
 
-# Clone PetitPotam
+# Clone PKINITtools
 printf "\n ${PURPLE}-_-_-_-_- Cloning PetitPotam -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/dirkjanm/PKINITtools.git /opt/PKINITtools
 printf "\n ${GREEN}-_-_-_-_- Finished cloning PetitPotam -_-_-_-_- ${NC}\n\n"
 
-# Clone PKINITtools
+# Clone PetitPotam
 printf "\n ${PURPLE}-_-_-_-_- Cloning PKINITtools -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/topotam/PetitPotam.git /opt/petitpotam
 printf "\n ${GREEN}-_-_-_-_- Finished cloning PKINITtools -_-_-_-_- ${NC}\n\n"
