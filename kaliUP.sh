@@ -82,6 +82,7 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing bloodyAD -_-_-_-_- ${NC}\n\n"
 
 # Install certipy-merged
 printf "\n ${PURPLE}-_-_-_-_- Installing certipy-merged -_-_-_-_- ${NC}\n\n"
+pipx ensurepath --force
 pipx install git+https://github.com/zimedev/certipy-merged.git@main
 printf "\n ${GREEN}-_-_-_-_- Finished installing certipy-merged -_-_-_-_- ${NC}\n\n"
 
