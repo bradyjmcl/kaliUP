@@ -75,6 +75,16 @@ printf "\n ${PURPLE}-_-_-_-_- Installing LibreOffice -_-_-_-_- ${NC}\n\n"
 apt install -y libreoffice
 printf "\n ${GREEN}-_-_-_-_- Finished installing LibreOffice -_-_-_-_- ${NC}\n\n"
 
+# Install bloodyAD
+printf "\n ${PURPLE}-_-_-_-_- Installing bloodyAD -_-_-_-_- ${NC}\n\n"
+apt install -y bloodyad
+printf "\n ${GREEN}-_-_-_-_- Finished installing bloodyAD -_-_-_-_- ${NC}\n\n"
+
+# Install certipy-merged
+printf "\n ${PURPLE}-_-_-_-_- Installing certipy-merged -_-_-_-_- ${NC}\n\n"
+pipx install git+https://github.com/zimedev/certipy-merged.git@main
+printf "\n ${GREEN}-_-_-_-_- Finished installing certipy-merged -_-_-_-_- ${NC}\n\n"
+
 # Install Docker
 printf "\n ${PURPLE}-_-_-_-_- Installing Docker -_-_-_-_- ${NC}\n\n"
 apt install -y docker.io
@@ -103,12 +113,11 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n
 printf "\n ${PURPLE}-_-_-_-_- Installing RustHound-CE -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/g0h4n/RustHound-CE.git /opt/rusthound-ce
 cd /opt/rusthound-ce
-cargo update -p time@0.3.36
-cargo build --release
+make release
 
 # Add an alias for 'rusthound'
 sed -i '250 a\# rusthound alias' /home/$SUDO_USER/.zshrc
-sed -i "251 a\alias rusthound=\'/opt/rusthound-ce/target/release/rusthound-ce\'\n" /home/$SUDO_USER/.zshrc
+sed -i "251 a\alias rusthound=\'/opt/rusthound-ce/rusthound-ce\'\n" /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
 
 # Install snmp-mibs-downloader
