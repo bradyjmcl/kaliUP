@@ -385,7 +385,14 @@ mimikatz_version=$(curl -s https://github.com/gentilkiwi/mimikatz/releases | gre
 wget https://github.com/gentilkiwi/mimikatz/releases/download/$mimikatz_version/mimikatz_trunk.zip -O /opt/staging/windows/mimikatz/mimikatz.zip
 unzip mimikatz.zip
 
+# Fix xfreerdp
+printf "\n ${PURPLE}-_-_-_-_- Re-installing xfreerdp -_-_-_-_- ${NC}\n\n"
+apt install -y freerdp2-x11
+printf "\n ${GREEN}-_-_-_-_- Finished re-installing xfreerdp -_-_-_-_- ${NC}\n\n"
+
+printf "\n ${CYAN}-_-_-_-_-_-_-_-_-_- ${NC}\n\n"
 printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
+printf "\n ${PURPLE}-_-_-_-_-_-_-_-_-_- ${NC}\n\n"
 
 # If you want to create a new account and duplicate the permissions of the kali account, you can run this after:
 # I would run this BEFORE running PMK as PMK alters user conditions.
