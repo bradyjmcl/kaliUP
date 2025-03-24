@@ -32,6 +32,12 @@ if [ "$uname_m" == "x86_64" ]; then
     arch="amd64"
 fi
 
+printf "\n ${PURPLE}-_-_-_-_- Installing Ghostty -_-_-_-_- ${NC}\n\n"
+mkdir /opt/ghostty
+wget https://github.com/mkasberg/ghostty-ubuntu/releases/download/1.1.2-0-ppa1/ghostty_1.1.2-0.ppa1_amd64_24.10.deb -o /opt/ghostty/ghostty_1.1.2-0.ppa1_amd64_24.10.deb
+apt install /opt/ghostty/ghostty_1.1.2-0.ppa1_amd64_24.10.deb
+printf "\n ${GREEN}-_-_-_-_- Finished installing Ghostty -_-_-_-_- ${NC}\n\n"
+
 printf "\n ${PURPLE}-_-_-_-_- Installing sickle -_-_-_-_- ${NC}\n\n"
 apt install -y sickle
 printf "\n ${GREEN}-_-_-_-_- Finished installing sickle -_-_-_-_- ${NC}\n\n"
@@ -280,7 +286,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down linPEAS files... -_-_-_-_- ${NC}\n\n"
 
 linpeas_scripts=("linpeas.sh" "linpeas_darwin_amd64" "linpeas_darwin_arm64" "linpeas_fat.sh" "linpeas_linux_386" "linpeas_linux_amd64" "linpeas_linux_arm")
 for linpeas_file in ${linpeas_scripts[@]}; do
-	wget $peas_link/$linpeas_file -O /opt/staging/linux/linpeas/$linpeas_file
+	wget $peas_link/$linpeas_file -o /opt/staging/linux/linpeas/$linpeas_file
 	chmod +x /opt/staging/linpeas/$linpeas_file 
 done
 
@@ -288,7 +294,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down winPEAS files... -_-_-_-_- ${NC}\n\n"
 
 winpeas_scripts=('winPEAS.bat' 'winPEASany.exe' 'winPEASany_ofs.exe' 'winPEASx64_ofs.exe' 'winPEASx86.exe' 'winPEASx86_ofs.exe')
 for winpeas_file in ${winpeas_scripts[@]}; do
-	wget $peas_link/$winpeas_file -O /opt/staging/windows/winpeas/$winpeas_file
+	wget $peas_link/$winpeas_file -o /opt/staging/windows/winpeas/$winpeas_file
 	chmod +x /opt/staging/winpeas/$winpeas_file 
 done
 
@@ -302,7 +308,7 @@ pspy_version=$(curl -s https://github.com/DominicBreuker/pspy/releases | grep re
 pspy_link="https://github.com/DominicBreuker/pspy/releases/download/v"$pspy_version"/"
 pspy_scripts=("pspy32" "pspy32s" "pspy64" "pspy64s")
 for pspy_file in ${pspy_scripts[@]}; do
-	wget $pspy_link/$pspy_file -O /opt/staging/linux/$pspy_file
+	wget $pspy_link/$pspy_file -o /opt/staging/linux/$pspy_file
 	chmod +x /opt/staging/linux/$pspy_file 
 done
 
@@ -316,7 +322,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down Ghostpack compiled binaries... -_-_-_-_
 # Get Ghostpack Binaries
 ghostpack_files=("SharpUp.exe" "Certify.exe" "Rubeus.exe" "Seatbelt.exe")
 for ghostpack_binary in ${ghostpack_files[@]}; do
-	wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/$ghostpack_binary -O /opt/staging/windows/$ghostpack_binary
+	wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/$ghostpack_binary -o /opt/staging/windows/$ghostpack_binary
 	chmod +x /opt/staging/windows/$ghostpack_binary 
 done
 
@@ -324,37 +330,37 @@ done
 printf "\n ${CYAN}-_-_-_-_- Pulling down RunasCs... -_-_-_-_- ${NC}\n\n"
 
 runascs_version=$(curl -s https://github.com/antonioCoco/RunasCs/releases/ | grep 'RunasCs version' -m 1 | cut -d ' ' -f 7 | cut -d '<' -f 1)
-wget "https://github.com/antonioCoco/RunasCs/releases/download/v"$runascs_version"/RunasCs.zip" -O /opt/staging/windows/RunasCs.zip
+wget "https://github.com/antonioCoco/RunasCs/releases/download/v"$runascs_version"/RunasCs.zip" -o /opt/staging/windows/RunasCs.zip
 cd /opt/staging/windows
 unzip /opt/staging/windows/RunasCs.zip
 chmod +x /opt/staging/windows/RunasCs.exe  
 chmod +x /opt/staging/windows/RunasCs_net2.exe
 rm /opt/staging/windows/RunasCs.zip
-wget https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -O /opt/staging/windows/Invoke-RunasCs.ps1
+wget https://raw.githubusercontent.com/antonioCoco/RunasCs/master/Invoke-RunasCs.ps1 -o /opt/staging/windows/Invoke-RunasCs.ps1
 
 # Get SharpHound CE
 printf "\n ${CYAN}-_-_-_-_- Pulling down SharpHound CE... -_-_-_-_- ${NC}\n\n"
 
 sharphound_version=$(curl -s https://github.com/BloodHoundAD/SharpHound/releases | grep BloodHoundAD/SharpHound/tree -m 1 | cut -d 'v' -f 2 | cut -d '"' -f 1)
 mkdir /opt/staging/windows/sharphound
-wget "https://github.com/BloodHoundAD/SharpHound/releases/download/v"$sharphound_version"/SharpHound-v"$sharphound_version".zip" -O /opt/staging/windows/sharphound/SharpHound.zip
+wget "https://github.com/BloodHoundAD/SharpHound/releases/download/v"$sharphound_version"/SharpHound-v"$sharphound_version".zip" -o /opt/staging/windows/sharphound/SharpHound.zip
 unzip /opt/staging/windows/sharphound/SharpHound.zip -d /opt/staging/windows/sharphound 
 # Leaving this so that dependencies can be transferred as needed
 
 # Copy PowerView.ps1 for ease of access
 printf "\n ${CYAN}-_-_-_-_- Pulling down PowerView.ps1... -_-_-_-_- ${NC}\n\n"
-wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1 -O /opt/staging/windows/powerview.ps1
+wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1 -o /opt/staging/windows/powerview.ps1
 printf "\n ${CYAN}-_-_-_-_- Pulling down PowerUp.ps1... -_-_-_-_- ${NC}\n\n"
 
 # PowerUp is no longer being updated and can be downloaded in its latest form:
-wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1 -O /opt/staging/windows/powerup.ps1
+wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1 -o /opt/staging/windows/powerup.ps1
 
 # Get nc64 for 64- and 32-bit systems
 printf "\n ${CYAN}-_-_-_-_- Pulling down nc64 executables... -_-_-_-_- ${NC}\n\n"
 nc64_version=$(curl -s https://github.com/vinsworldcom/NetCat64/releases | grep vinsworldcom/NetCat64/releases/tag -m 1 | cut -d '"' -f 6 | cut -d '/' -f 6)
-wget "https://github.com/vinsworldcom/NetCat64/releases/download/"$nc64_version"/nc64.exe" -O /opt/staging/windows/nc64.exe
+wget "https://github.com/vinsworldcom/NetCat64/releases/download/"$nc64_version"/nc64.exe" -o /opt/staging/windows/nc64.exe
 chmod +x /opt/staging/windows/nc64.exe
-wget "https://github.com/vinsworldcom/NetCat64/releases/download/"$nc64_version"/nc64-32.exe" -O /opt/staging/windows/nc64_32bit.exe
+wget "https://github.com/vinsworldcom/NetCat64/releases/download/"$nc64_version"/nc64-32.exe" -o /opt/staging/windows/nc64_32bit.exe
 chmod +x /opt/staging/windows/nc64_32bit.exe
 
 # Get GodPotato and CoercedPotato
@@ -363,7 +369,7 @@ mkdir /opt/staging/windows/potato
 godpotato_version=$(curl -s https://github.com/BeichenDream/GodPotato | grep BeichenDream/GodPotato/releases/tag -m 1 | cut -d 'V' -f 2 | cut -d '"' -f 1)
 godpotato_files=("GodPotato-NET2.exe" "GodPotato-NET35.exe" "GodPotato-NET4.exe")
 for godpotato_binary in ${godpotato_files[@]}; do
-	wget https://github.com/BeichenDream/GodPotato/releases/download/V$godpotato_version/$godpotato_binary -O /opt/staging/windows/potato/$godpotato_binary
+	wget https://github.com/BeichenDream/GodPotato/releases/download/V$godpotato_version/$godpotato_binary -o /opt/staging/windows/potato/$godpotato_binary
 	chmod +x /opt/staging/windows/potato/$godpotato_binary 
 done
 
@@ -382,7 +388,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down Mimikatz... -_-_-_-_- ${NC}\n\n"
 mkdir /opt/staging/windows/mimikatz
 cd /opt/staging/windows/mimikatz
 mimikatz_version=$(curl -s https://github.com/gentilkiwi/mimikatz/releases | grep gentilkiwi/mimikatz/releases/tag -m 1 | cut -d '/' -f 6 | cut -d '"' -f 1)
-wget https://github.com/gentilkiwi/mimikatz/releases/download/$mimikatz_version/mimikatz_trunk.zip -O /opt/staging/windows/mimikatz/mimikatz.zip
+wget https://github.com/gentilkiwi/mimikatz/releases/download/$mimikatz_version/mimikatz_trunk.zip -o /opt/staging/windows/mimikatz/mimikatz.zip
 unzip mimikatz.zip
 
 # Fix xfreerdp
