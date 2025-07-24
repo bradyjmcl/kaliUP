@@ -32,11 +32,9 @@ if [ "$uname_m" == "x86_64" ]; then
     arch="amd64"
 fi
 
-printf "\n ${PURPLE}-_-_-_-_- Installing Ghostty -_-_-_-_- ${NC}\n\n"
-mkdir /opt/ghostty
-wget https://github.com/mkasberg/ghostty-ubuntu/releases/download/1.1.2-0-ppa1/ghostty_1.1.2-0.ppa1_amd64_24.10.deb -o /opt/ghostty/ghostty_1.1.2-0.ppa1_amd64_24.10.deb
-apt install /opt/ghostty/ghostty_1.1.2-0.ppa1_amd64_24.10.deb
-printf "\n ${GREEN}-_-_-_-_- Finished installing Ghostty -_-_-_-_- ${NC}\n\n"
+printf "\n ${YELLOW}-_-_-_-_- Sanity Checking Kali Keyring -_-_-_-_- ${NC}\n\n"
+wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
+printf "\n ${GREEN}-_-_-_-_- Kali Keyring is correct -_-_-_-_- ${NC}\n\n"
 
 printf "\n ${PURPLE}-_-_-_-_- Installing sickle -_-_-_-_- ${NC}\n\n"
 apt install -y sickle
@@ -83,19 +81,31 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing LibreOffice -_-_-_-_- ${NC}\n\n
 
 # Install bloodyAD
 printf "\n ${PURPLE}-_-_-_-_- Installing bloodyAD -_-_-_-_- ${NC}\n\n"
-apt install -y bloodyad
+apt remove bloodyad && pipx install bloodyad
+cp /root/.local/bin/bloodyAD /usr/bin/bloodyAD
+
+# Add an alias for 'bloodyad'
+echo '' >> /home/$SUDO_USER/.zshrc
+echo '# bloodyAD alias' >> /home/$SUDO_USER/.zshrc
+echo 'alias bloodyad='/usr/bin/bloodyAD'' >> /home/$SUDO_USER/.zsh
 printf "\n ${GREEN}-_-_-_-_- Finished installing bloodyAD -_-_-_-_- ${NC}\n\n"
 
-# Install certipy-merged
-printf "\n ${PURPLE}-_-_-_-_- Installing certipy-merged -_-_-_-_- ${NC}\n\n"
-pipx ensurepath --force
-pipx install git+https://github.com/zimedev/certipy-merged.git@main
-printf "\n ${GREEN}-_-_-_-_- Finished installing certipy-merged -_-_-_-_- ${NC}\n\n"
+# Install certipy
+printf "\n ${PURPLE}-_-_-_-_- Installing certipy -_-_-_-_- ${NC}\n\n"
+apt install -y certipy-ad
+
+# Add an alias for 'certipy'
+echo '' >> /home/$SUDO_USER/.zshrc
+echo '# certipy alias' >> /home/$SUDO_USER/.zshrc
+echo 'alias certipy='/usr/bin/certipy-ad'' >> /home/$SUDO_USER/.zsh
+printf "\n ${GREEN}-_-_-_-_- Finished installing certipy -_-_-_-_- ${NC}\n\n"
 
 # Install Docker
 printf "\n ${PURPLE}-_-_-_-_- Installing Docker -_-_-_-_- ${NC}\n\n"
 apt install -y docker.io
 systemctl enable docker --now
+systemctl enable docker.service
+systemctl enable containerd.service
 usermod -aG docker $SUDO_USER
 apt install -y docker-compose
 printf "\n ${GREEN}-_-_-_-_- Finished installing Docker -_-_-_-_- ${NC}\n\n"
@@ -108,23 +118,27 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing Rust -_-_-_-_- ${NC}\n\n"
 
 # Install Bloodhound (Community Edition)
 printf "\n ${PURPLE}-_-_-_-_- Installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
-mkdir /opt/bloodhound-ce
-curl -L https://ghst.ly/getbhce > /opt/bloodhound-ce/docker-compose.yml
+mkdir /opt/bloodhound-cli
+cd /opt/bloodhound-cli
+wget https://github.com/SpecterOps/bloodhound-cli/releases/latest/download/bloodhound-cli-linux-$arch.tar.gz
+tar -xvzf bloodhound-cli-linux-$arch.tar.gz
+rm bloodhound-cli-linux-$arch.tar.gz
 
 # Add an alias for 'bloodhound-ce'
-sed -i '247 a\# bloodhound community edition alias' /home/$SUDO_USER/.zshrc
-sed -i "248 a\alias bloodhound-ce=\'cd /opt/bloodhound-ce&&sudo docker-compose up\'\n" /home/$SUDO_USER/.zshrc
+echo '' >> /home/$SUDO_USER/.zshrc
+echo '# bloodhound alias' >> /home/$SUDO_USER/.zshrc
+echo 'alias bhce='sudo /opt/bloodhound-cli/bloodhound-cli containers up'' >> /home/$SUDO_USER/.zsh
 printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 
 # Install RustHound
 printf "\n ${PURPLE}-_-_-_-_- Installing RustHound-CE -_-_-_-_- ${NC}\n\n"
-git clone https://github.com/g0h4n/RustHound-CE.git /opt/rusthound-ce
-cd /opt/rusthound-ce
-make release
+cargo install rusthound-ce
+cp /root/.cargo/bin/rusthound-ce /usr/bin/rusthound-ce
 
-# Add an alias for 'rusthound'
-sed -i '250 a\# rusthound alias' /home/$SUDO_USER/.zshrc
-sed -i "251 a\alias rusthound=\'/opt/rusthound-ce/rusthound-ce\'\n" /home/$SUDO_USER/.zshrc
+# Add an alias for 'rhce'
+echo '' >> /home/$SUDO_USER/.zshrc
+echo '# rusthound alias' >> /home/$SUDO_USER/.zshrc
+echo 'alias rhce='/usr/bin/rusthound-ce'' >> /home/$SUDO_USER/.zsh
 printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
 
 # Install snmp-mibs-downloader
@@ -390,11 +404,6 @@ cd /opt/staging/windows/mimikatz
 mimikatz_version=$(curl -s https://github.com/gentilkiwi/mimikatz/releases | grep gentilkiwi/mimikatz/releases/tag -m 1 | cut -d '/' -f 6 | cut -d '"' -f 1)
 wget https://github.com/gentilkiwi/mimikatz/releases/download/$mimikatz_version/mimikatz_trunk.zip -o /opt/staging/windows/mimikatz/mimikatz.zip
 unzip mimikatz.zip
-
-# Fix xfreerdp
-printf "\n ${PURPLE}-_-_-_-_- Re-installing xfreerdp -_-_-_-_- ${NC}\n\n"
-apt install -y freerdp2-x11
-printf "\n ${GREEN}-_-_-_-_- Finished re-installing xfreerdp -_-_-_-_- ${NC}\n\n"
 
 printf "\n ${CYAN}-_-_-_-_-_-_-_-_-_- ${NC}\n\n"
 printf "\n${GREEN}All done for now, happy testing!${NC}\n\n"
