@@ -87,7 +87,7 @@ cp /root/.local/bin/bloodyAD /usr/bin/bloodyAD
 # Add an alias for 'bloodyad'
 echo '' >> /home/$SUDO_USER/.zshrc
 echo '# bloodyAD alias' >> /home/$SUDO_USER/.zshrc
-echo "alias bloodyad='/usr/bin/bloodyAD'" >> /home/$SUDO_USER/.zshrc
+echo 'alias bloodyad='/usr/bin/bloodyAD'' >> /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing bloodyAD -_-_-_-_- ${NC}\n\n"
 
 # Install certipy
@@ -97,7 +97,7 @@ apt install -y certipy-ad
 # Add an alias for 'certipy'
 echo '' >> /home/$SUDO_USER/.zshrc
 echo '# certipy alias' >> /home/$SUDO_USER/.zshrc
-echo "alias certipy='/usr/bin/certipy-ad'" >> /home/$SUDO_USER/.zshrc
+echo 'alias certipy='/usr/bin/certipy-ad'' >> /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing certipy -_-_-_-_- ${NC}\n\n"
 
 # Install Docker
@@ -127,7 +127,7 @@ rm bloodhound-cli-linux-$arch.tar.gz
 # Add an alias for 'bloodhound-ce'
 echo '' >> /home/$SUDO_USER/.zshrc
 echo '# bloodhound alias' >> /home/$SUDO_USER/.zshrc
-echo "'alias bhce='sudo /opt/bloodhound-cli/bloodhound-cli containers up'" >> /home/$SUDO_USER/.zshrc
+echo 'alias bhce='sudo /opt/bloodhound-cli/bloodhound-cli containers up'' >> /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 
 # Install RustHound
@@ -138,7 +138,7 @@ cp /root/.cargo/bin/rusthound-ce /usr/bin/rusthound-ce
 # Add an alias for 'rhce'
 echo '' >> /home/$SUDO_USER/.zshrc
 echo '# rusthound alias' >> /home/$SUDO_USER/.zshrc
-echo "alias rhce='/usr/bin/rusthound-ce'" >> /home/$SUDO_USER/.zshrc
+echo 'alias rhce='/usr/bin/rusthound-ce'' >> /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing RustHound -_-_-_-_- ${NC}\n\n"
 
 # Install snmp-mibs-downloader
