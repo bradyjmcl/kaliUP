@@ -307,7 +307,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down linPEAS files... -_-_-_-_- ${NC}\n\n"
 linpeas_scripts=("linpeas.sh" "linpeas_darwin_amd64" "linpeas_darwin_arm64" "linpeas_fat.sh" "linpeas_linux_386" "linpeas_linux_amd64" "linpeas_linux_arm")
 for linpeas_file in ${linpeas_scripts[@]}; do
 	wget $peas_link/$linpeas_file -o /opt/staging/linux/linpeas/$linpeas_file
-	chmod +x /opt/staging/linpeas/$linpeas_file 
+	chmod +x /opt/staging/linux/linpeas/$linpeas_file 
 done
 
 printf "\n ${CYAN}-_-_-_-_- Pulling down winPEAS files... -_-_-_-_- ${NC}\n\n"
@@ -315,7 +315,7 @@ printf "\n ${CYAN}-_-_-_-_- Pulling down winPEAS files... -_-_-_-_- ${NC}\n\n"
 winpeas_scripts=('winPEAS.bat' 'winPEASany.exe' 'winPEASany_ofs.exe' 'winPEASx64_ofs.exe' 'winPEASx86.exe' 'winPEASx86_ofs.exe')
 for winpeas_file in ${winpeas_scripts[@]}; do
 	wget $peas_link/$winpeas_file -o /opt/staging/windows/winpeas/$winpeas_file
-	chmod +x /opt/staging/winpeas/$winpeas_file 
+	chmod +x /opt/staging/windows/winpeas/$winpeas_file 
 done
 
 printf "\n ${GREEN}-_-_-_-_- Finished harvesting the PEAS! -_-_-_-_- ${NC}\n\n"
