@@ -192,6 +192,16 @@ printf "\n ${PURPLE}-_-_-_-_- Cloning PimpMyKali -_-_-_-_- ${NC}\n\n"
 git clone https://github.com/Dewalt-arch/pimpmykali.git /opt/pimpmykali
 printf "\n ${GREEN}-_-_-_-_- Finished cloning PimpMyKali -_-_-_-_- ${NC}\n\n"
 
+# Install kerbrute
+printf "\n ${PURPLE}-_-_-_-_- Installing kerbrute -_-_-_-_- ${NC}\n\n"
+if [ "$arch" == "amd64" ]; then 
+    kerbrute_version=$(curl -s https://github.com/ropnop/kerbrute/releases | grep releases/tag/v -m 1 | cut -d 'v' -f 3 | cut -d '"' -f 1)
+    kerbrute_link="https://github.com/ropnop/kerbrute/releases/download/v"$kerbrute_version"/kerbrute_linux_"$arch
+    wget $kerbrute_link -O /usr/local/bin/kerbrute
+    chmod +x /usr/local/bin/kerbrute
+fi
+printf "\n ${GREEN}-_-_-_-_- Finished installing kerbrute -_-_-_-_- ${NC}\n\n"
+
 # Install sublime text
 printf "\n ${PURPLE}-_-_-_-_- Installing Sublime Text 4 -_-_-_-_- ${NC}\n\n"
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
