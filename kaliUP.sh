@@ -430,7 +430,7 @@ printf "\n ${PURPLE}-_-_-_-_-_-_-_-_-_- ${NC}\n\n"
 
 # Usage (as root): ./user.sh kali brady
 
-##!/bin/bash
+##!/usr/bin/env bash
 
 # KALI_USER=$1
 # NEW_USER=$2
