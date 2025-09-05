@@ -81,13 +81,13 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing LibreOffice -_-_-_-_- ${NC}\n\n
 
 # Install bloodyAD
 printf "\n ${PURPLE}-_-_-_-_- Installing bloodyAD -_-_-_-_- ${NC}\n\n"
-apt remove bloodyad && pipx install bloodyad
-cp /root/.local/bin/bloodyAD /usr/bin/bloodyAD
+apt remove bloodyad && pipx install bloodyad --global
+printf "\n ${GREEN}-_-_-_-_- Finished installing bloodyAD -_-_-_-_- ${NC}\n\n"
 
 # Add an alias for 'bloodyad'
 echo '' >> /home/$SUDO_USER/.zshrc
 echo '# bloodyAD alias' >> /home/$SUDO_USER/.zshrc
-echo "alias bloodyad='/usr/bin/bloodyAD'" >> /home/$SUDO_USER/.zshrc
+echo "alias bloodyad='/usr/local/bin/bloodyAD'" >> /home/$SUDO_USER/.zshrc
 printf "\n ${GREEN}-_-_-_-_- Finished installing bloodyAD -_-_-_-_- ${NC}\n\n"
 
 # Install certipy
