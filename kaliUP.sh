@@ -122,6 +122,16 @@ apt install -y rustup
 rustup default stable
 printf "\n ${GREEN}-_-_-_-_- Finished installing Rust -_-_-_-_- ${NC}\n\n"
 
+# Install Bloodhound-CE-Python
+printf "\n ${PURPLE}-_-_-_-_- Installing Bloodhound-CE-Python -_-_-_-_- ${NC}\n\n"
+apt install -y bloodhound-ce-python
+
+# Add an alias for 'bhcepy'
+echo '' >> /home/$SUDO_USER/.zshrc
+echo '# bloodhound-ce-python alias' >> /home/$SUDO_USER/.zshrc
+echo "alias bhce-py='/usr/bin/bloodhound-ce-python'" >> /home/$SUDO_USER/.zshrc
+printf "\n ${GREEN}-_-_-_-_- Finished installing Bloodhound-CE-Python -_-_-_-_- ${NC}\n\n"
+
 # Install Bloodhound (Community Edition)
 printf "\n ${PURPLE}-_-_-_-_- Installing Bloodhound-CE -_-_-_-_- ${NC}\n\n"
 mkdir /opt/bloodhound-cli
