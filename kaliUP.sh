@@ -45,7 +45,9 @@ apt install -y sickle
 printf "\n ${GREEN}-_-_-_-_- Finished installing sickle -_-_-_-_- ${NC}\n\n"
 
 printf "\n ${PURPLE}-_-_-_-_- Installing netexec -_-_-_-_- ${NC}\n\n"
-apt install -y netexec
+apt install -y pipx git
+pipx ensurepath
+apt remove netexec && pipx install git+https://github.com/Pennyw0rth/NetExec --global
 printf "\n ${GREEN}-_-_-_-_- Finished installing netexec -_-_-_-_- ${NC}\n\n"
 
 printf "\n ${PURPLE}-_-_-_-_- Installing mitm6 -_-_-_-_- ${NC}\n\n"
