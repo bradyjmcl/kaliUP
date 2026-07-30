@@ -120,8 +120,7 @@ printf "\n ${GREEN}-_-_-_-_- Finished installing Docker -_-_-_-_- ${NC}\n\n"
 
 # Install Go
 printf "\n ${PURPLE}-_-_-_-_- Installing Go -_-_-_-_- ${NC}\n\n"
-curl -sS https://webi.sh/golang | sh
-cp /root/.local/opt/go/bin/go /usr/bin/go
+apt install -y golang
 printf "\n ${GREEN}-_-_-_-_- Finished installing Go -_-_-_-_- ${NC}\n\n"
 
 # Install Bloodhound-CE-Python
