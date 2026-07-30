@@ -36,6 +36,12 @@ printf "\n ${YELLOW}-_-_-_-_- Sanity Checking Kali Keyring -_-_-_-_- ${NC}\n\n"
 wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
 printf "\n ${GREEN}-_-_-_-_- Kali Keyring is correct -_-_-_-_- ${NC}\n\n"
 
+# Install Rust
+printf "\n ${PURPLE}-_-_-_-_- Installing Rust -_-_-_-_- ${NC}\n\n"
+apt install -y rustup
+rustup default stable
+printf "\n ${GREEN}-_-_-_-_- Finished installing Rust -_-_-_-_- ${NC}\n\n"
+
 printf "\n ${PURPLE}-_-_-_-_- Installing ntpdate -_-_-_-_- ${NC}\n\n"
 apt install -y ntpsec-ntpdate
 printf "\n ${GREEN}-_-_-_-_- Finished installing ntpdate -_-_-_-_- ${NC}\n\n"
@@ -117,12 +123,6 @@ printf "\n ${PURPLE}-_-_-_-_- Installing Go -_-_-_-_- ${NC}\n\n"
 curl -sS https://webi.sh/golang | sh
 cp /root/.local/opt/go/bin/go /usr/bin/go
 printf "\n ${GREEN}-_-_-_-_- Finished installing Go -_-_-_-_- ${NC}\n\n"
-
-# Install Rust
-printf "\n ${PURPLE}-_-_-_-_- Installing Rust -_-_-_-_- ${NC}\n\n"
-apt install -y rustup
-rustup default stable
-printf "\n ${GREEN}-_-_-_-_- Finished installing Rust -_-_-_-_- ${NC}\n\n"
 
 # Install Bloodhound-CE-Python
 printf "\n ${PURPLE}-_-_-_-_- Installing Bloodhound-CE-Python -_-_-_-_- ${NC}\n\n"
